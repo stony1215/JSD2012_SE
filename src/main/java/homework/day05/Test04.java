@@ -18,11 +18,14 @@ public class Test04 {
         File[] dirs=file.listFiles();
         for(int i=0;i<dirs.length;i++){
             String filename=dirs[i].getName();
-            if(filename.contains(".obj")){
+            if(filename.endsWith(".obj")){
                 FileInputStream fis=new FileInputStream(filename);
                 ObjectInputStream ois=new ObjectInputStream(fis);
                 Object f=ois.readObject();
-                System.out.println(f);
+
+                    System.out.println(f);
+
+
 
             }
         }

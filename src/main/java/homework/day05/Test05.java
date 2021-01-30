@@ -26,12 +26,12 @@ public class Test05 {
 
     public static void read() throws IOException {
         FileInputStream fis = new FileInputStream("content.txt");
-        InputStreamReader ois = new InputStreamReader(fis);
+
         int d;
-        while ((d = ois.read()) != -1) {
+        while ((d = fis.read()) != -1) {
             System.out.print((char)d);
         }
-        ois.close();
+        fis.close();
 
     }
 

@@ -20,7 +20,8 @@ public class Test01 {
 
         int d;
         while ((d = fis.read()) != -1) {
-            fos.write(fis.read());
+//            fos.write(fis.read());
+            fos.write(d);
         }
         System.out.println("复制完毕!");
         fis.close();

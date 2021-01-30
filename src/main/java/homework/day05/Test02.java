@@ -18,9 +18,11 @@ public class Test02 {
         BufferedOutputStream bos = new BufferedOutputStream(fos);
 
         int d = 0;
-        if ((d = bis.read()) == -1) {
+        while((d = bis.read())!= -1) {
             bos.write(d);
         }
         System.out.println("复制完毕!");
+        bis.close();
+        bos.close();
     }
 }

@@ -29,7 +29,7 @@ public class Test09 {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String line = readLine();
 		//hello world
 		System.out.println(line);
@@ -43,23 +43,19 @@ public class Test09 {
 		System.out.println(line);
 	}
 	
-	public static String readLine() {
-		byte[] data=new byte[1];
-		int len;
-		String st=",.";
-		String str="";
-		try {
-			while((len=fis.read(data))!=-1){
-				String str2=new String(data,0,len);
-				str+=str2;
-				if(str.contains(st)){
-					break;
-				}
+	public static String readLine() throws IOException {
+		StringBuilder builder = new StringBuilder();
+		int d;
+		char cur='a';
+		char pre='a';
+		while ((d = fis.read()) != -1) {
+			cur = (char) d;
+			if (pre==','&& cur == '.') {
+				break;
 			}
-			return str;
-		} catch (IOException e) {
-			e.printStackTrace();
+			builder.append(cur);
+			pre=cur;
 		}
-		return str;
+		return builder.toString().substring(0,builder.length()-1);
 	}
 }
