@@ -1,4 +1,4 @@
-package raf;
+package src.main.java.raf;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

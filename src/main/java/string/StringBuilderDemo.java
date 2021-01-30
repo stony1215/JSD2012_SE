@@ -6,7 +6,7 @@ import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
  * String的优化导致其为不变对象，这会存在利于重用不利于修改操作。
  * 频繁修改String会降低性能并有较多的系统开销
  * java.lang.StringBuilder是专门设计用来修改String的API,
- * 其内部维护一个可变的char数组，并提供了多种修改字符串内容的方法，例如：增删改查
+ * 其内部维护一个可变的char数组，并提供了多种修改字符串内容的方法，例如：增删改插
  * 和String原有的相关方法：indexOf,length等等
  * StringBuilder修改String内容速度快，开销小
  *
@@ -50,7 +50,7 @@ public class StringBuilderDemo {
          */
         builder.insert(0,"活着");
         System.out.println(builder);
-        builder.reverse();
+        builder.reverse();//反转
         System.out.println(builder);
         /**
          * StringBuilder非线程安全，StringBuffer线程安全

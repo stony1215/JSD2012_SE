@@ -11,11 +11,5 @@ public class ValueOfDemo {
         String str=String.valueOf(i);
         System.out.println(str);
 
-        double dou=123.123;
-        String str2=String.valueOf(dou);
-        System.out.println(str2);
-
-        String s3=i+"";//不常用
-        System.out.println(s3);
     }
 }
