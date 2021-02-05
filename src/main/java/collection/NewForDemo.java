@@ -19,5 +19,9 @@ public class NewForDemo {
         c.add("eight");
         c.add("nine");
         c.add("ten");
+        for (String s:c
+             ) {
+            System.out.println(s);
+        }
     }
 }

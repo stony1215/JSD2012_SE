@@ -10,12 +10,12 @@ public class CollectionDemo4 {
         c1.add("C++");
         c1.add("java");
         c1.add(".net");
-        System.out.println(c1);
+//        System.out.println(c1);
         Collection c2=new HashSet();
         c2.add("android");
         c2.add("java");
         c2.add("ios");
-        System.out.println(c2);
+//        System.out.println(c2);
         /*
         boolean addAll(Collection c)
         发生变化返回true

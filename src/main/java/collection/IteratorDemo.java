@@ -27,9 +27,25 @@ public class IteratorDemo {
             String str=it.next();
             System.out.println(str);
             if("#".equals(str)){
-               it.remove();
+                it.remove();
             }
         }
+
+
+
+
+
+
+
+
+
+//        while(it.hasNext()){
+//            String str=it.next();
+//            System.out.println(str);
+//            if("#".equals(str)){
+//               it.remove();
+//            }
+//        }
 
 
         System.out.println(c);

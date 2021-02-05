@@ -3,7 +3,6 @@ package collection;
  * Collection提供了一个方法toArray,可以将一个集合转换为一个数组;
  */
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 

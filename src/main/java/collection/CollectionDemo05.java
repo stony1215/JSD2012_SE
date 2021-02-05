@@ -12,11 +12,15 @@ import java.util.Iterator;
  */
 public class CollectionDemo05 {
     public static void main(String[] args) {
-        Collection<String> c=new ArrayList<String>();
+        Collection<String> c=new ArrayList();
         c.add("one");
         c.add("two");
         c.add("three");
 //        c.add(new Point(1,2));//不匹配
         Iterator<String> it=c.iterator();
+        for (Iterator<String> iter = it; iter.hasNext(); ) {
+            String s = iter.next();
+            System.out.println(s);
+        }
     }
 }
