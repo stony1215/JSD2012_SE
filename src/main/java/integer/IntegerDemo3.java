@@ -11,5 +11,6 @@ public class IntegerDemo3 {
 
         Integer i=d;
         d=i;
+        System.out.println(d);
     }
 }

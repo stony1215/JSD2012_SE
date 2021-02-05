@@ -2,6 +2,7 @@ package socket;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * java.net.Socket
@@ -20,27 +21,51 @@ public class Client {
     public Client() {
         try {
             System.out.println("正在连接服务端...");
-            socket = new Socket("176.28.8.73", 8088);
+            socket = new Socket("localhost", 8088);
             System.out.println("与服务端连接成功...");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void start() {
-            try (
-                    PrintWriter pw = new PrintWriter(
-                            new BufferedWriter(
-                                    new OutputStreamWriter(
-                                            socket.getOutputStream(), "utf-8"
-                            )
-                    ),true
-            ) ;
-        ){//通过输出流给服务端发送一句话
-            pw.println("来了老弟");
+        //先启动读取服务端发送过来的消息线程
+        ServerHandler handler=new ServerHandler();
+        Thread t=new Thread(handler);
+        t.setDaemon(true);
+        t.start();
 
-            } catch (IOException e){
-        e.printStackTrace();
+        try (
+                PrintWriter pw = new PrintWriter(
+                        new BufferedWriter(
+                                new OutputStreamWriter(
+                                        socket.getOutputStream(), "utf-8"
+                                )
+                        ), true
+                );
+
+        ) {//通过输出流给服务端发送一句话
+            Scanner scan = new Scanner(System.in);
+            System.out.println("请开始输入内容,单独输入exit退出");
+            while (true) {
+                String line = scan.nextLine();
+                if ("exit".equals(line)) {
+                    break;
+                }
+                pw.println(line);
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 //        try {
 //            OutputStream out=socket.getOutputStream();
@@ -53,10 +78,31 @@ public class Client {
 //            e.printStackTrace();
 
 
-}
+    }
 
     public static void main(String[] args) {
         Client client = new Client();
         client.start();
     }
+    public class ServerHandler implements Runnable{
+        @Override
+        public void run() {
+            try (
+                    BufferedReader br=new BufferedReader(
+                            new InputStreamReader(
+                                    socket.getInputStream(),"utf-8"
+                            )
+                    );
+                    ){
+                String line;
+                while((line=br.readLine())!=null) {
+                    System.out.println(line);
+                }
+
+            } catch (IOException e) {
+//                e.printStackTrace();
+            }
+        }
+    }
+
 }
