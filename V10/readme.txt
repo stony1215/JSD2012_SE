@@ -16,3 +16,11 @@
 2,重构sendHeaders方法,通过遍历headers,将所有响应头发送给客户端
 3,在ClientHandler处理请求的环节,设置response的响应头,并最终在flush时将设置的响应头发送给客户端
 这里设置的响应头还是Content-Type和Content-Length即可.
+
+
+第二个修改时可以根据请求的资源类型设置对应的Content_Type的值,使得浏览器可以正确展示出页面,
+实现:
+1:在ClientHandler处理请求的环节添加一个Map,里面临时存放6种资源类型对应的Content-Type的值
+2:根据请求的文件的名字截取对应的后缀名,然后再根据后缀名作为key去Map中提取对应的Content-Type的值并在
+向HttpResponse添加响应头Content-Type时设置对应的值.
+如此一来浏览器就可以正确展示页面了.

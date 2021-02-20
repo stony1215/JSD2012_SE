@@ -6,6 +6,7 @@ import com.webserver.http.HttpResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,9 +20,21 @@ public class ClientHandler implements Runnable{
             String path = request.getUri();
             File file = new File("./webapps/" + path);
             if (file.exists() && file.isFile()) {
-                System.out.println("该资源已找到");
+                System.out.println("该资源已找到:"+file.getName());
+                Map<String,String> mimeMapping=new HashMap<>();
+                mimeMapping.put("html","text/html");
+                mimeMapping.put("css","text/css");
+                mimeMapping.put("js","application/javascript");
+                mimeMapping.put("png","image/png");
+                mimeMapping.put("gif","image/gif");
+                mimeMapping.put("jpg","image/jpeg");
 
-                response.putHeader("Content-Type","text/html");
+                String fileName=file.getName();
+                String ext=fileName.substring(fileName.lastIndexOf(".")+1);
+                String type=mimeMapping.get(ext);
+                System.out.println("type"+type);
+
+                response.putHeader("Content-Type",type);
                 response.putHeader("Content-Length",file.length()+"");
                 response.setEntity(file);
 
