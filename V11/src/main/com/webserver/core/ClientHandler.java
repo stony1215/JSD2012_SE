@@ -6,6 +6,8 @@ import com.webserver.http.HttpResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientHandler implements Runnable{
     private Socket socket;
@@ -17,16 +19,34 @@ public class ClientHandler implements Runnable{
             String path = request.getUri();
             File file = new File("./webapps/" + path);
             if (file.exists() && file.isFile()) {
-                System.out.println("该资源已找到");
+                System.out.println("该资源已找到:"+file.getName());
+                Map<String,String> mimeMapping=new HashMap<>();
+                mimeMapping.put("html","text/html");
+                mimeMapping.put("css","text/css");
+                mimeMapping.put("js","application/javascript");
+                mimeMapping.put("png","image/png");
+                mimeMapping.put("gif","image/gif");
+                mimeMapping.put("jpg","image/jpeg");
+
+                String fileName=file.getName();
+                String ext=fileName.substring(fileName.lastIndexOf(".")+1);
+                String type=mimeMapping.get(ext);
+                System.out.println("type"+type);
+
+                response.putHeader("Content-Type",type);
+                response.putHeader("Content-Length",file.length()+"");
                 response.setEntity(file);
 
             } else {
                 System.out.println("路径不存在!!!!404!!!!!!");
-                File notfound = new File("./webapps/root/404.html");
+                File notFound = new File("webapps/root/404.html");
                 response.setStatusCode(404);
                 response.setStatusReason("NotFound");
-                response.setEntity(notfound);
+                response.putHeader("Content-Type","text/html");
+                response.putHeader("Content-Length",notFound.length()+"");
+                response.setEntity(notFound);
             }
+            response.putHeader("Server","WebServer");
             response.flush();
             System.out.println("响应发送完毕!");
         }catch (EmptyRequestException e){
